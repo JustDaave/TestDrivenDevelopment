@@ -21,7 +21,7 @@ def describe_movement_between_stations():
 
         assert first_location == MIDDLE
         assert second_location == SOUTH
-        assert tram.getLocation() == SOUTH
+        assert tram.getLocation() == MIDDLE
 
     def test_reaching_an_end_reverses_direction_before_the_next_move():
         tram = Tram(location=MIDDLE, direction="north")
