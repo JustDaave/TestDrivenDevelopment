@@ -1,0 +1,74 @@
+High Level Requirements:
+The Tram is like the one in the Detroit Metropolitan Airport.
+
+It drives back and forth all day (two directions)
+3 stops: North, South and Middle
+It can't move when the doors are open
+Doors have 3 states: open, closed, locked (they can't open while traveling)
+There is an emergency button that stops the train and unlocks the doors. The train will not restart until the system is reset after someone pushes the emergency button. At which point, it will travel to the nearest end (north or south) and start over.
+There is a system in the track that can tell where the train is. there are 1000 'spots:' 1 is North, 500 is middle, 1000 is South.
+ 
+
+Specifications:
+Calling move() advances the tram exactly one station and never moves it beyond either end station.
+When the tram reaches an end station, its direction reverses before its next movement.
+When the doors are locked, calling open() has no effect
+When the doors are locked, calling close() has no effect
+Before the train moves the doors must be in the locked state
+Emergency button stops movement and unlocks doors
+Open Button opens the doors (as long as the doors are not locked)
+Close Button closes the doors during a reset state
+getLocation() returns the current location of the tram - a number between 1 and 1000
+if getLocation() returns a number out of bounds, throw error
+If emergency state is engaged, When system reset occurs tram will continue in its current direct to the closest station
+tram always stops at a station
+time spent in the stopped state at a station is configurable
+When a train is stopped at a stop doors are unlocked and opened
+Before a train starts to move from a station, doors are closed and locked
+When doors are 'locked' they can't be opened by pushing the open button
+If doors are forced open, it enters emergency state
+Reset button is on main console
+Reset sets Emergency to False Once all doors are closed manually, moves to next station
+list of stops is configurable
+arrive() and depart() control speed of tram at stops
+stops have an arrival message which plays on arrivals
+brakes engage when intended_speed < current_speed
+emergency state engages brakes
+Reset state tests brakes
+Emergency state can be engaged remotely
+operator can use console to manually stop and start the tram
+operate can use console to open / close doors
+operator can reset the system
+ 
+
+Tram State Data:
+
+In_Motion: True | False
+Door_State: Open | Closed | Locked
+Location: integer 1-1000
+Direction: North | South
+Emergency: True | False
+Message: String
+Reset: True | False
+Intended_Speed: 0-100
+Current_Speed: 0-100
+Brakes: True | False
+ 
+
+Tram Operations:
+
+open doors
+close doors
+move
+announce arrival message
+emergency
+reset
+accelerate
+decelerate (brakes?)
+ 
+
+Parking Lot:
+
+Handle configurable stops (setting and removing)
+Handle Track Loops (i.e. instead of north and south, 1-1000 would go back to 1 after 1000. Maybe direction would always be the same in this case.)
+Handle multiple trams
