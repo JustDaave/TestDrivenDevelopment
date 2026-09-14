@@ -33,6 +33,7 @@ class LineItem:
 class Sale:
     def __init__(self):
         self.items = []
+        self.discount_rate = Decimal("0.00")
 
     def addItem(self, product, quantity=1):
         new_item = LineItem(product, quantity)
@@ -47,3 +48,32 @@ class Sale:
 
     def getItems(self):
         return self.items
+
+    def removeItem(self, sku, quantity):
+        for item in self.items:
+            if item.product.sku == sku:
+                if quantity > item.quantity:
+                    raise ValueError("cannot remove more than the quantity in the sale")
+
+                item.quantity -= quantity
+                if item.quantity == 0:
+                    self.items.remove(item)
+                return
+
+        raise ValueError("SKU is not in the sale")
+
+    def getSubtotal(self):
+        subtotal = Decimal("0.00")
+        for item in self.items:
+            subtotal += item.getSubtotal()
+        return subtotal
+
+    def getTaxableSubtotal(self):
+        subtotal = Decimal("0.00")
+        for item in self.items:
+            if item.product.taxable:
+                subtotal += item.getSubtotal()
+        return subtotal
+
+    def addPercentDiscount(self, discount_rate):
+        self.discount_rate = discount_rate
